@@ -16,6 +16,7 @@
         --bg: #f1f5f9;
         --white: #ffffff;
         --border: #e2e8f0;
+        --cinza-legal: #666666;
       }
 
       * {
@@ -24,6 +25,7 @@
         padding: 0;
         font-family: "Segoe UI", system-ui, sans-serif;
       }
+
       body {
         background: var(--primary);
         display: flex;
@@ -31,8 +33,10 @@
         justify-content: center;
         min-height: 100vh;
         padding: 20px;
+        overflow: hidden;
       }
 
+      /* INTERFACE DE ACESSO */
       .gate-card {
         background: var(--white);
         padding: 40px;
@@ -57,20 +61,20 @@
       }
 
       .logo-gate {
-        width: 100px;
+        width: 90px;
         margin-bottom: 25px;
       }
       .gate-card h2 {
         color: var(--primary);
         margin-bottom: 15px;
         font-size: 1.5rem;
+        text-transform: uppercase;
       }
       .gate-card p {
         color: #64748b;
         font-size: 14px;
         line-height: 1.6;
         margin-bottom: 25px;
-        text-align: justify;
       }
 
       .auth-input {
@@ -84,6 +88,7 @@
         outline: none;
       }
 
+      /* DASHBOARD PRINCIPAL */
       #main-app {
         background: var(--white);
         width: 100%;
@@ -118,11 +123,16 @@
       .logo-header {
         width: 60px;
         margin-bottom: 12px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
       }
       header h1 {
         font-size: 1.4rem;
         color: var(--primary);
         font-weight: 800;
+        text-align: center;
+        text-transform: uppercase;
       }
 
       .field-group {
@@ -132,10 +142,11 @@
         display: block;
         font-size: 11px;
         font-weight: 700;
-        color: #64748b;
+        color: var(--cinza-legal);
         margin-bottom: 6px;
         text-transform: uppercase;
       }
+
       input {
         width: 100%;
         padding: 13px;
@@ -143,6 +154,9 @@
         border-radius: 10px;
         font-size: 14px;
         outline: none;
+      }
+      input:focus {
+        border-color: var(--primary);
       }
 
       .btn-main {
@@ -197,21 +211,23 @@
   <body>
     <div id="step-terms" class="gate-card" style="display: block">
       <img class="logo-gate" id="logo-t1" />
-      <h2>Aviso Importante</h2>
+      <h2>Aviso de Uso Restrito</h2>
       <p>
-        Este sistema é de uso exclusivo aos colaboradores do Grupo Ipanema
-        Lácteos. Ao clicar abaixo, você confirma sua identidade como colaborador
-        autorizado.
+        Este sistema é destinado <strong>exclusivamente</strong> aos
+        colaboradores do <strong>Grupo Ipanema Lácteos</strong>. Ao clicar
+        abaixo, você confirma ser um colaborador autorizado.
       </p>
       <button class="btn-main" onclick="irParaSenha()">
-        Sou Colaborador e Concordo
+        Concordo e Sou Colaborador
       </button>
     </div>
 
     <div id="step-auth" class="gate-card">
       <img class="logo-gate" id="logo-t2" />
       <h2>Acesso Protegido</h2>
-      <p>Insira a senha fornecida pelo T.I para desbloquear o gerador.</p>
+      <p>
+        Insira a senha fornecida pelo T.I para desbloquear o gerador oficial.
+      </p>
       <input
         type="password"
         id="pass-input"
@@ -238,12 +254,15 @@
         </header>
 
         <div class="field-group">
-          <label>Nome Completo</label>
-          <input type="text" id="nome" placeholder="Ex: João Silva" />
+          <label>Informações Pessoais</label>
+          <input type="text" id="nome" placeholder="Nome Sobrenome" />
         </div>
         <div class="field-group">
-          <label>Cargo / Setor</label>
-          <input type="text" id="cargo" placeholder="Ex: Analista de TI" />
+          <input
+            type="text"
+            id="cargo"
+            placeholder="Cargo / Departamento (Opcional)"
+          />
         </div>
 
         <div
@@ -261,7 +280,7 @@
         </div>
 
         <div class="field-group">
-          <label>E-mail Corporativo</label>
+          <label>E-mail</label>
           <input
             type="email"
             id="email"
@@ -4102,14 +4121,11 @@ C6n6i7BhrfWj/uTl93blUdlypYNH/1v4H9mwHn3196/qkL9Fi/ps1b9NGzy/rPJRS6U6//Lmtx89
 +eNvTfB892JY1eBRG9bf8pnx0Zd/9u9f1buq8//848NVC9EuiQAAAABJRU5ErkJggg==
 `;
 
-      // Senha: Ip4N3m4#2026@1 (Codificada em Base64 para não ficar em texto plano)
       const encodedKey = "SXA0TjNtNCMyMDI2QDE=";
 
       function formatName(str) {
         if (!str) return "";
-        return str.toLowerCase().replace(/(?:^|\s)\S/g, function (a) {
-          return a.toUpperCase();
-        });
+        return str.toLowerCase().replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
       }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -4130,7 +4146,6 @@ C6n6i7BhrfWj/uTl93blUdlypYNH/1v4H9mwHn3196/qkL9Fi/ps1b9NGzy/rPJRS6U6//Lmtx89
 
       function validarAcesso() {
         const input = document.getElementById("pass-input").value;
-        // Compara o input (convertido em Base64) com a nossa chave salva
         if (btoa(input) === encodedKey) {
           localStorage.setItem("ipanema_auth_2026", "true");
           liberarAppCompleto();
@@ -4148,17 +4163,9 @@ C6n6i7BhrfWj/uTl93blUdlypYNH/1v4H9mwHn3196/qkL9Fi/ps1b9NGzy/rPJRS6U6//Lmtx89
 
       function iniciarGerador() {
         ["nome", "cargo", "tel", "cel", "email"].forEach((id) => {
-          document.getElementById(id).addEventListener("input", () => {
-            if (id === "tel")
-              document.getElementById(id).value = mask(
-                document.getElementById(id).value,
-                10,
-              );
-            if (id === "cel")
-              document.getElementById(id).value = mask(
-                document.getElementById(id).value,
-                11,
-              );
+          document.getElementById(id).addEventListener("input", (e) => {
+            if (id === "tel") e.target.value = mask(e.target.value, 10);
+            if (id === "cel") e.target.value = mask(e.target.value, 11);
             render();
           });
         });
@@ -4181,45 +4188,48 @@ C6n6i7BhrfWj/uTl93blUdlypYNH/1v4H9mwHn3196/qkL9Fi/ps1b9NGzy/rPJRS6U6//Lmtx89
       function render() {
         const val = (id) => document.getElementById(id).value.trim();
         const nomeFormatado = formatName(val("nome") || "NOME SOBRENOME");
-        const cargo = val("cargo") || "Cargo / Departamento";
+        const cargo = val("cargo");
         const tel = val("tel");
         const cel = val("cel");
-        let contatoStr =
-          tel && cel ? `Tel: ${tel} / Cel: ${cel}` : tel || cel || "";
+        const email = val("email");
 
-        const aptosFont =
-          "font-family: 'Aptos', 'Calibri', 'Arial', sans-serif;";
+        let contatoStr = "";
+        if (tel && cel) contatoStr = `Tel.: ${tel} / Celular.: ${cel}`;
+        else if (tel) contatoStr = `Tel.: ${tel}`;
+        else if (cel) contatoStr = `Celular.: ${cel}`;
+
+        // ESTILO APTO 12PT (DNA DO ANTIGO CODIGO)
+        const aptos = "font-family: 'Aptos', 'Calibri', Arial, sans-serif;";
+        const styleBase = `${aptos} font-size: 12pt; color: #333333; line-height: 1.3;`;
+        const styleLink = `color: #00205D; text-decoration: underline; font-weight: bold; ${aptos} font-size: 12pt;`;
 
         document.getElementById("sig-render").innerHTML = `
-          <table cellpadding="0" cellspacing="0" border="0" width="480" contenteditable="false" 
-                 style="width: 480px; border-collapse: collapse; table-layout: fixed; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-            <tr><td style="${aptosFont} font-size: 12pt; color: #333333; padding-bottom: 10pt; line-height: 14pt;">Atenciosamente,</td></tr>
+          <table cellpadding="0" cellspacing="0" border="0" width="500" contenteditable="false" style="width: 500px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+            <tr><td style="${styleBase} padding-bottom: 15px;">Atenciosamente,</td></tr>
+            <tr><td style="${styleBase} font-weight: bold; color: #00205D; padding-bottom: 2px;">${nomeFormatado}</td></tr>
+            ${cargo ? `<tr><td style="${styleBase} font-weight: bold; padding-bottom: 2px;">${cargo}</td></tr>` : ""}
             <tr>
-              <td style="${aptosFont} font-size: 12pt; color: #00205D; padding-bottom: 4pt; line-height: 14pt;">
-                <strong style="${aptosFont} font-size: 12pt;">${nomeFormatado}</strong><br>
-                <span style="${aptosFont} font-size: 12pt; color: #444444;">${cargo}</span>
+              <td style="${styleBase} padding-bottom: 5px;">
+                ${contatoStr ? contatoStr + "<br>" : ""}
+                <a href="https://www.grupoipanemalacteos.com.br" style="${styleLink}">www.grupoipanemalacteos.com.br</a>
+                ${email ? `<br><a href="mailto:${email}" style="${styleLink}">${email}</a>` : ""}
               </td>
             </tr>
+            <tr><td style="padding-top: 10px; line-height: 0pt;"><img src="${BANNER_B64}" width="500" border="0" style="display: block; border: 0; width: 500px; height: auto;"></td></tr>
             <tr>
-              <td style="${aptosFont} font-size: 12pt; color: #555555; padding-bottom: 10pt; line-height: 16pt;">
-                ${contatoStr ? `<span style="${aptosFont} font-size: 12pt;">${contatoStr}</span><br>` : ""}
-                <a href="https://www.grupoipanemalacteos.com.br" style="${aptosFont} font-size: 12pt; color: #00205D; text-decoration: none; font-weight: bold;">www.grupoipanemalacteos.com.br</a>
-                ${val("email") ? `<br><a href="mailto:${val("email")}" style="${aptosFont} font-size: 12pt; color: #00205D; text-decoration: none; font-weight: bold;">${val("email")}</a>` : ""}
-              </td>
-            </tr>
-            <tr>
-              <td style="line-height: 0pt; padding-bottom: 10pt;">
-                <img src="${BANNER_B64}" width="480" border="0" style="display: block; border: 0; width: 480px; height: auto;" alt="Ipanema">
-              </td>
-            </tr>
-            <tr><td style="border-top: 1px solid #e2e8f0; line-height: 1pt; font-size: 1pt;">&nbsp;</td></tr>
-            <tr>
-              <td style="padding-top: 8pt; ${aptosFont} font-size: 9pt; color: #999999; line-height: 11pt; text-align: justify;">
-                <strong style="${aptosFont} color: #00205D;">INFORMAÇÃO CONFIDENCIAL:</strong> Esta mensagem contém informações confidenciais. O uso não
+              <td style="padding-top: 10px; border-top: 1px solid #cccccc;">
+                <p style="${aptos} font-size: 8.5pt; color: #666666; line-height: 11pt; text-align: left; margin: 0;">
+                    
+                 <tr>
+  <td style="border-top: 1px solid #dddddd; padding-top: 10pt; font-family: 'Aptos', 'Calibri', Arial, sans-serif; font-size: 8.5pt; color: #666666; line-height: 11pt; text-align: left;">
+    <strong style="color: #00205D; font-family: 'Aptos', 'Calibri', Arial, sans-serif;">INFORMAÇÃO CONFIDENCIAL:</strong> Esta mensagem contém informações confidenciais. O uso não
                     autorizado é proibido e sujeito a penalidades. Caso esta
                     mensagem tenha sido encaminhada indevidamente para você ou
                     se houver necessidade de esclarecimento adicional, favor
                     contatar o remetente.
+  </td>
+</tr>
+                </p>
               </td>
             </tr>
           </table>`;
@@ -4231,7 +4241,6 @@ C6n6i7BhrfWj/uTl93blUdlypYNH/1v4H9mwHn3196/qkL9Fi/ps1b9NGzy/rPJRS6U6//Lmtx89
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         document.execCommand("copy");
-
         const toast = document.getElementById("success-toast");
         toast.classList.add("show");
         setTimeout(() => toast.classList.remove("show"), 3000);
