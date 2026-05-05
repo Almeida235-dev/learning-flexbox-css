@@ -4145,14 +4145,16 @@ C6n6i7BhrfWj/uTl93blUdlypYNH/1v4H9mwHn3196/qkL9Fi/ps1b9NGzy/rPJRS6U6//Lmtx89
       }
 
       function validarAcesso() {
-        const input = document.getElementById("pass-input").value;
-        if (btoa(input) === encodedKey) {
-          localStorage.setItem("ipanema_auth_2026", "true");
-          liberarAppCompleto();
-        } else {
-          document.getElementById("msg-erro").innerText = "Senha incorreta.";
-        }
-      }
+    const input = document.getElementById("pass-input").value;
+
+    // Comparação direta: texto contra texto
+    if (input === encodedKey) {
+        localStorage.setItem("ipanema_auth_2026", "true");
+        liberarAppCompleto();
+    } else {
+        document.getElementById("msg-erro").innerText = "Senha incorreta.";
+    }
+}
 
       function liberarAppCompleto() {
         document.getElementById("step-terms").style.display = "none";
